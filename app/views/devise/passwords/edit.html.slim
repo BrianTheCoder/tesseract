@@ -1,0 +1,13 @@
+.row-fluid
+  .span6.offset3
+    h2 Change your password
+    hr
+    = simple_form_for(resource, as: resource_name, url: user_password_path, html: {method: :put, class: 'well'}) do |f|
+      = f.error_notification
+      = f.input :reset_password_token, as: :hidden
+      = f.full_error :reset_password_token
+      = f.input :password, label: "New password", required: true, input_html: {class: 'span5'}
+      = f.input :password_confirmation, label: "Confirm your new password", required: true, input_html: {class: 'span5'}
+      = f.button :submit, "Change my password", class: 'btn btn-primary'
+
+    = render "links"

@@ -1,0 +1,10 @@
+.row-fluid
+  .span6.offset3
+    h1 Forgot your password?
+    hr
+    = simple_form_for(resource, as: resource_name, url: user_password_path, html: {method: :post}) do |f|
+      = f.error_notification
+      = f.input :email, required: true, input_html: {class: 'span5'}
+      = f.button :submit, "Send me reset password instructions", class: 'btn btn-primary'
+
+    = render "links"

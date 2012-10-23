@@ -1,0 +1,12 @@
+.row-fluid
+  .span6.offset3
+    h1 Sign up
+    hr
+    = form_for resource, as: resource_name, url: user_registration_path do |f|
+      = f.email_field :email, required: true, class: 'm-wrap m-ctrl-huge', placeholder: 'Email'
+      = f.password_field :password, required: true, class: 'm-wrap m-ctrl-huge', placeholder: 'Password'
+      = f.password_field :password_confirmation, required: true, class: 'm-wrap m-ctrl-huge', placeholder: 'Password Confirmation'
+      br
+      .pull-right= f.submit "Sign up", class: 'm-btn big blue'
+      .clearfix
+    = render "links"

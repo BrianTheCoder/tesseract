@@ -1,0 +1,12 @@
+.row-fluid
+  .span6.offset3
+    h1 Sign in
+    hr
+    = form_for resource, as: resource_name, url: user_session_path do |f|
+      = f.email_field :email, required: true, class: 'm-wrap m-ctrl-huge', placeholder: 'Email'
+      = f.password_field :password, required: true, class: 'm-wrap m-ctrl-huge', placeholder: 'Password'
+      = f.hidden_field :remember_me, value: true
+      br
+      .pull-right= f.submit "Sign in", class: 'm-btn big blue'
+      .clearfix
+    = render "links"

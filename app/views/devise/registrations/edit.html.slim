@@ -1,0 +1,24 @@
+#user.row-fluid
+  .span6.offset3
+    h1 Edit #{resource_name.to_s.humanize}
+
+    = form_for resource, as: resource_name, url: registration_path(resource_name), method: :put do |f|
+      = devise_error_messages!
+      = f.text_field :name, class: 'm-wrap m-ctrl-huge', placeholder: 'Name'
+      = f.email_field :email, class: 'm-wrap m-ctrl-huge', placeholder: 'Email'
+      = f.password_field :password, class: 'm-wrap m-ctrl-huge', placeholder: 'Password'
+      = f.password_field :password_confirmation, class: 'm-wrap m-ctrl-huge', placeholder: 'Password Confirmation'
+      = f.password_field :current_password, class: 'm-wrap m-ctrl-huge', placeholder: 'Current Password'
+      br
+      span.help-inline we need your current password to confirm your changes
+      .pull-right= f.submit "Update", class: 'm-btn big blue'
+      .clearfix
+    hr
+    .pull-left
+      = link_to "&laquo; Back".html_safe, :back, class: 'm-btn big'
+    .cancel.pull-right
+      h3 Cancel my account
+      p 
+        | Unhappy? 
+        br
+        = link_to "Cancel my account", registration_path(resource_name), confirm: "Are you sure?", method: :delete, class: 'm-btn red mini'

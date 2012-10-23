@@ -1,0 +1,51 @@
+#image(data-id="#{@image.id}" data-project-id="#{@project.id}")
+  .row-fluid
+    .span10.offset1
+      .page-header
+        h1.pull-left= link_to @project.title, project_path(@project)
+        .pull-right
+          a.m-btn.red.remove(data-method="delete" data-remote="true" data-confirm="Are you sure?" href=project_image_path(@project, @image))
+            i.icon-remove.icon-white
+            |  Destroy
+        .clearfix
+  .row-fluid
+    .span10.offset1
+      .span8
+        .view= image_tag @image.file.url
+      .span4
+        .panel
+          .m-btn-group.pull-right
+            a.m-btn.blue.new-region(href="#")
+              i.icon-plus.icon-white
+              |  Add a Region
+          .clearfix
+          = form_for Region.new, url: train_project_image_path(@project, @image), remote: true, html: {:'data-type' => :json, class: 'hide'} do |f|
+            hr
+            = f.text_field :identifier, placeholder: 'Identifier', class: 'm-wrap'
+            .dimensions.inline
+              .span5
+                = f.text_field :width, placeholder: 'Width', class: 'm-wrap'
+              .span2
+                em x
+              .span5
+                = f.text_field :height, placeholder: 'Height', class: 'm-wrap'
+            .position.inline
+              .span5
+                = f.text_field :x, placeholder: 'X', class: 'm-wrap'
+              .span2
+                em x
+              .span5  
+                = f.text_field :y, placeholder: 'Y', class: 'm-wrap'
+            .m-btn-group.pull-right
+              a.add.m-btn.green(href="#") Add
+              a.cancel.m-btn.red(href="#") Cancel
+            .clearfix
+          ul.unstyled.regions
+            - @regions.each do |region|
+              li(data-x=region.x data-y=region.y data-width=region.width data-height=region.height)
+                = link_to region.identifier, '#'
+                / a.edit.pull-right(href="#" data-title="Edit Region")
+                /   i.icon-edit
+                = link_to 'x', untrain_project_image_path(@project, @image, region), remote: true, confirm: 'Are you sure?', method: :delete, class: 'close'
+                .clearfix
+        

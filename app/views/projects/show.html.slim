@@ -1,0 +1,44 @@
+#project(data-id="#{@project.id}")
+  .row-fluid
+    .span10.offset1
+      .page-header
+        h1.pull-left= @project.title.titleize
+        .pull-right
+          .m-btn-group
+            a.m-btn.big.green(href="#image-form" data-toggle="modal")
+              | Upload an Image
+              i.m-icon-big-swapup.m-icon-white
+            a.m-btn.big.purple(href="#webcam" data-toggle="modal")
+              | Use your Webcam
+            a.m-btn.big.blue(href=project_regions_path(@project))
+              | View Regions
+            br
+            blockquote or drag one onto the page
+        .clearfix
+  .row-fluid
+    .span10.offset1
+      - @images.in_groups_of(4) do |images|
+        ul.thumbnails
+          - images.compact.each do |image|
+            li.span3
+              a.thumbnail(href=project_image_path(@project, image))= image_tag image.file.thumb.url
+              = link_to 'x', project_image_path(@project, image), method: :delete, remote: true, confirm: 'Are you sure?', class: 'close'
+    #image-form.modal.fade
+      .modal-header
+        button.close(data-dismiss="modal")
+        h3 Upload an Image
+      .modal-body
+        = form_for [@project, Image.new], remote: true, multipart: true, html: {:'data-type' => :json} do |f|
+          = f.file_field :file, required: true, multiple: true
+          .pull-right= f.submit 'Upload', class: 'm-btn big blue'
+          .clearfix
+    #webcam.modal.fade
+      .modal-header
+        button.close(data-dismiss="modal")
+        h3 Your Webcam
+      .modal-body
+        .cam
+        .buttons.pull-right
+          a.m-btn.red.big.picture(href="#") Take a picture
+        .clearfix
+      

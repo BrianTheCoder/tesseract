@@ -1,0 +1,15 @@
+table.table-bordered
+  thead
+    th Identifier
+    th X
+    th Y
+    th Width
+    th Height
+  tbody
+    - @regions.each do |region|
+      tr
+        td= region.identifier
+        td= region.x
+        td= region.y
+        td= region.width
+        td= region.height

@@ -1,0 +1,25 @@
+#projects
+  .row-fluid
+    .span10.offset1
+      .page-header
+        h1.pull-left Projects
+        a.pull-right.m-btn.green(href="#project-form" data-toggle="modal")
+          i.icon-plus.icon-white
+          |  New Project
+        .clearfix
+  .row-fluid
+    .span8.offset2
+      ul.unstyled
+        - @projects.each do |project|
+          li
+            = link_to project.title, project_path(project), class: 'title'
+            = link_to 'x', project_path(project), method: :delete, remote: true, confirm: 'Are you sure?', class: 'close'
+  #project-form.modal.fade
+    .modal-header
+      button.close(data-dismiss="modal") x
+      h3 New Project
+    .modal-body
+      = form_for Project.new, remote: true, html: {:'data-type' => :json} do |f|
+        = f.text_field :title, required: true, placeholder: 'Title', class: 'm-wrap m-ctrl-huge'
+        .pull-right= f.submit '+ Add', class: 'm-btn big blue'
+        .clearfix
