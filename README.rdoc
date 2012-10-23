@@ -1,0 +1,15 @@
+* edit region
+* animate region move if done within threshold
+* github login
+* queue uploads (max 3)
+* queue previews sequentially
+* pjax signup
+
+# Future
+* stripe
+* upload data to github
+* daily/hourly github sync
+* multiple members to a project
+* admin (manage all)
+* pm (manage images, regions, edit project, manage members, edit self)
+* grunt (upload images, delete own images, add regions, edit/delete own regions, edit self)

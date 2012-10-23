@@ -74,6 +74,12 @@ $(document).ready ->
     </div>
   </li>"
   
+  $('ul.nav a').on 'click', (e)->
+    e.preventDefault()
+    $.pjax
+      url: $(this).attr('href')
+      container: '#main'
+  
   $('#main')
     .on 'ajax:success', '#project-form form', (e, data, status, xhr)->
       $('#project-form').modal('hide').find('input:text').val('')

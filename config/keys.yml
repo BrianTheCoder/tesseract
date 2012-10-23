@@ -1,0 +1,12 @@
+development:
+  github:
+    id: 1ee5a0ac970d745000ef
+    secret: cd5f2fb795e961f63dc8736242eb2a4aa6209290
+production:
+  github:
+    id: 1ee5a0ac970d745000ef
+    secret: cd5f2fb795e961f63dc8736242eb2a4aa6209290
+test:
+  github:
+    id: 1ee5a0ac970d745000ef
+    secret: cd5f2fb795e961f63dc8736242eb2a4aa6209290
