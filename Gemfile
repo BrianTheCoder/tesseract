@@ -10,6 +10,7 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'rails'
 gem 'slim'
+gem 'stripe'
 gem 'turbo-sprockets-rails3'
 
 group :assets do

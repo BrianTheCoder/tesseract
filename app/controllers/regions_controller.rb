@@ -7,7 +7,7 @@ class RegionsController < ApplicationController
   end
   
   def show
-    @region = project.regions.where(identifier: params[:id]).first
+    @regions = project.regions.where(identifier: params[:id]).all
   end
   
   protected

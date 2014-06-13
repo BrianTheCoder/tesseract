@@ -1,0 +1,6 @@
+Welcome <%= @invite.name %>!
+=======================================================
+
+You have been invited by <%= @membership.invited_by.name %> to the group <%= @membership.project.title %>
+
+Click here to accept the invitation: <%= accept_group_invite_url(@membership.project, @invite) %>

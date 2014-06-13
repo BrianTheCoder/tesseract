@@ -1,0 +1,41 @@
+#members(data-project-id=@project.id)
+  .row-fluid
+    .span10.offset1
+      .page-header
+        h1.pull-left Members of #{@project.title.titleize}
+        a.pull-right.m-btn.green(href="#member-form" data-toggle="modal")
+          i.icon-plus.icon-white
+          |  Add a Member
+        .clearfix
+  .row-fluid
+    .span10.offset1
+      ul.unstyled.members
+        - @memberships.each do |membership|
+          li
+            .pull-left
+              h3
+                - if membership.user.present?
+                  = membership.user.name
+                - else
+                  = membership.name
+              small
+                - if membership.user.present?
+                  = membership.user.email
+                - else
+                  = membership.email
+                | &nbsp;
+                span.label= membership.status
+            .pull-right
+              = link_to 'x', project_member_path(@project.id, membership), method: :delete, confirm: 'Are you sure?', remote: true, class: 'close'
+            .clearfix
+  #member-form.modal.fade
+    .modal-header
+      button.close(data-dismiss="modal") x
+      h3 New Member
+    .modal-body
+      = form_for [@project, Membership.new], url: project_members_path(@project), remote: true, html: {:'data-type' => :json} do |f|
+        = f.text_field :name, required: true, placeholder: 'Name', class: 'm-wrap m-ctrl-huge'
+        = f.text_field :email, required: true, placeholder: 'Email', class: 'm-wrap m-ctrl-huge'
+        .pull-right= f.submit '+ Add', class: 'm-btn big blue'
+        .clearfix
+      

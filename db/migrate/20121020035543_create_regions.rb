@@ -8,7 +8,7 @@ class CreateRegions < ActiveRecord::Migration
       t.integer :height
       t.belongs_to :image
       t.belongs_to :user
-      t.belongs_to :projects
+      t.belongs_to :project
       t.timestamps
     end
   end

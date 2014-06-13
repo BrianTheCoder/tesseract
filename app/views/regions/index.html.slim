@@ -1,15 +1,26 @@
-table.table-bordered
-  thead
-    th Identifier
-    th X
-    th Y
-    th Width
-    th Height
-  tbody
-    - @regions.each do |region|
-      tr
-        td= region.identifier
-        td= region.x
-        td= region.y
-        td= region.width
-        td= region.height
+#regions
+  .row-fluid
+    .span10.offset1
+      .page-header
+        h1.pull-left Regions for #{@project.title.titleize}
+        .clearfix
+  .row-fluid
+    .span10.offset1
+      table.table.table-bordered
+        thead
+          th Identifier
+          th X
+          th Y
+          th Width
+          th Height
+          th
+        tbody
+          - @regions.each do |region|
+            tr
+              td= region.identifier
+              td= region.x
+              td= region.y
+              td= region.width
+              td= region.height
+              td
+                = link_to 'Delete', project_region_path(@project, region)

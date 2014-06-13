@@ -10,5 +10,5 @@ class Image < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
   
-  has_many :regions
+  has_many :regions, dependent: :destroy
 end

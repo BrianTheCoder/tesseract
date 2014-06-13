@@ -5,18 +5,20 @@
         h1.pull-left= @project.title.titleize
         .pull-right
           .m-btn-group
-            a.m-btn.big.green(href="#image-form" data-toggle="modal")
-              | Upload an Image
-              i.m-icon-big-swapup.m-icon-white
-            a.m-btn.big.purple(href="#webcam" data-toggle="modal")
+            a.m-btn.green(href="#image-form" data-toggle="modal")
+              | Upload an Image 
+              i.m-icon-swapup.m-icon-white
+            a.m-btn.purple(href="#webcam" data-toggle="modal")
               | Use your Webcam
-            a.m-btn.big.blue(href=project_regions_path(@project))
-              | View Regions
+            a.m-btn.blue(href=project_regions_path(@project))
+              | Regions
+            a.m-btn.orange(href=project_members_path(@project))
+              | Members
             br
             blockquote or drag one onto the page
         .clearfix
   .row-fluid
-    .span10.offset1
+    #images.span10.offset1
       - @images.in_groups_of(4) do |images|
         ul.thumbnails
           - images.compact.each do |image|

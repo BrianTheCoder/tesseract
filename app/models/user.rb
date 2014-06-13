@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :projects, through: :memberships
   has_many :images
   has_many :regions
+  has_many :services
   has_one :account
   
   def name=(str)

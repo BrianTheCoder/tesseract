@@ -1,0 +1,25 @@
+#region
+  .row-fluid
+    .span10.offset1
+      .page-header
+        h1.pull-left #{@regions[0].identifer} Region
+        .clearfix
+  .row-fluid
+    .span10.offset1
+      table.table.table-bordered
+        thead
+          th X
+          th Y
+          th Width
+          th Height
+          th
+        tbody
+          - @regions.each do |region|
+            tr
+              td= region.x
+              td= region.y
+              td= region.width
+              td= region.height
+              td
+                = link_to 'Delete', project_region_path(@project, region)
+      

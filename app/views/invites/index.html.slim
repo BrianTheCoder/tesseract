@@ -1,0 +1,14 @@
+#invites
+  h1 Pending Invites
+  ul.span6
+    - @invites.each do |invite|
+      li
+        p Invited by #{invite.invited_by.name} to #{invite.group.title}
+        .menu
+          a.accept.btn.btn-success(href="#{accept_group_invite_path(invite.group, invite)}" data-remote="true" data-method="post")
+            span.icon.icon-ok
+            | Accept
+          | &nbsp;
+          a.reject.btn.btn-danger(href="#{group_invite_path(invite.group, invite)}" data-remote="true" data-method="delete")
+            span.icon.icon-remove
+            | Reject

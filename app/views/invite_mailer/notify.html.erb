@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Welcome <%= @invite.name %>!</h1>
+    <p>
+      You have been invited by <%= @invite.invited_by.name %> to the group <%= @invite.group.title %>. Please signup with this same email in order to accept the invitation.
+      <br />
+      <%= link_to 'Click here to accept the invitation', accept_group_invite_url(@invite.group, @invite) %>
+    </p>
+  </body>
+</html>

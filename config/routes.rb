@@ -9,6 +9,12 @@ Tesseract::Application.routes.draw do
         delete '/train/:region_id', to: :untrain, as: :untrain
       end
     end
+    resources :invites do
+      member do
+        post :accept
+      end
+    end
   end
+  get '/invites', to: 'invites#index', as: :invites
   root to: 'projects#index'
 end

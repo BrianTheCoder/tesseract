@@ -14,9 +14,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   else
     storage :file
   end
+  
+  version :full do
+    process resize_to_limit: [780, 10_000]
+  end
 
   version :thumb do
-    process :resize_to_fill => [276, 165]
+    process resize_to_fill: [276, 165]
   end
 
   def store_dir

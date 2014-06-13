@@ -35,3 +35,12 @@ Tesseract::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 end
+
+ActionMailer::Base.smtp_settings = {
+  :address        => 'localhost',
+  :port           => '1025',
+  :domain         => 'tesseraptor.herokuapp.com'
+}
+ActionMailer::Base.delivery_method = :smtp
+
+Rails.application.routes.default_url_options[:host] = 'localhost:7355'

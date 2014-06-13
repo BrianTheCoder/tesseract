@@ -25,22 +25,30 @@ ActiveRecord::Schema.define(:version => 20121020035543) do
 
   create_table "images", :force => true do |t|
     t.string   "file"
+    t.integer  "width"
+    t.integer  "height"
     t.integer  "project_id"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "memberships", :id => false, :force => true do |t|
+  create_table "memberships", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
     t.integer  "account_id"
     t.integer  "user_id"
     t.integer  "project_id"
     t.integer  "access"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "accepted_at"
+    t.integer  "inviter_id"
+    t.string   "token"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "memberships", ["account_id", "user_id", "project_id"], :name => "index_memberships_on_account_id_and_user_id_and_project_id", :unique => true
+  add_index "memberships", ["project_id", "email"], :name => "index_memberships_on_project_id_and_email", :unique => true
 
   create_table "projects", :force => true do |t|
     t.string   "title"
@@ -58,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20121020035543) do
     t.integer  "height"
     t.integer  "image_id"
     t.integer  "user_id"
+    t.integer  "project_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -89,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20121020035543) do
     t.string   "authentication_token"
     t.string   "first_name"
     t.string   "last_name"
+    t.boolean  "active"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end

@@ -7,9 +7,9 @@ class ImagesController < ApplicationController
   end
   
   def create
-    @image = project.images.new(params[:image])
-    @image.user = current_user
-    @image.save
+    image = project.images.new(params[:image])
+    image.user = current_user
+    image.save
     render json: image
   end
   

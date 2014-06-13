@@ -8,17 +8,19 @@ class MembersController < ApplicationController
   
   def create
     membership = project.memberships.create(params[:membership])
+    MembershipMailer.notify(membership).deliver
     render json: membership
   end
   
   def update
-    membership = project.memberships.find(params[:membership_id])
-    membership.update_attributes(params[:membership])
+    membership = project.memberships.find(params[:id])
+    membership.access = params[:membership][:access]
+    membership.save
     render json: membership
   end
   
   def destroy
-    membership = project.memberships.find(params[:membership_id])
+    membership = project.memberships.find(params[:id])
     membership.destroy
     render json: membership
   end

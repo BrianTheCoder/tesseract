@@ -17,53 +17,6 @@
 #= require_tree .
 
 $(document).ready ->
-  fileSelect = (files, callback)->
-    self = this
-    markup = []
-    $.each files, (idx, file)->
-      $thumb = $(imageTemplate)
-      markup.push $thumb
-      reader = new FileReader()
-      reader.onload = (e)->
-        $thumb.find('a.thumbnail img').attr({
-          src: e.target.result
-          name: file.name
-        })
-        
-      reader.readAsDataURL file
-      
-      progressHandler = (e)->
-        percent = Math.round((e.loaded/e.total) * 100)
-        console.log e, percent
-        
-        $thumb.find('div.progress div.bar').attr('width', "#{percent}%")
-        
-      uploadSetup = ->
-        myXhr = $.ajaxSettings.xhr()
-        if myXhr.upload
-          myXhr.upload.addEventListener 'progress', progressHandler, false
-        
-        myXhr
-
-      data = new FormData()
-      data.append 'image[file]', file
-      
-      $.ajax
-        url: "/projects/#{$('#project').data('id')}/images.json"
-        type: 'POST'
-        xhr: uploadSetup
-        success: ->
-          $.pjax
-            url: "/projects/#{$('#project').data('id')}"
-            container: '#main'
-        data: data
-        cache: false
-        contentType: false
-        processData: false
-      
-    
-    $('ul.thumbnails').append markup
-      
   imageTemplate = "<li class=\"span3\">
     <a href=\"#\" class=\"thumbnail\"><img src=\"http://placehold.it/276x165\" /></a>
     <div class=\"loading\">
@@ -73,6 +26,72 @@ $(document).ready ->
       </div>
     </div>
   </li>"
+  
+  fileSelect = (files, callback)->
+    self = this
+    startingCount = imageCount = $('#images li').length
+    previewCount = 0
+    uploadCount = 0
+    $images = $('#images')
+    _.each files, (file)->
+      if imageCount % 4 == 0
+        $images.append('<ul class=\"thumbnails\"></ul>')
+      $images.find('ul.thumbnails:last').append imageTemplate
+      imageCount = $images.find('li').length
+      
+      
+    previewImage = (file)->
+      console.log file
+      reader = new FileReader()
+      reader.onload = (e)->
+        $images.find("li:eq(#{startingCount + previewCount}) img")
+          .attr(src: e.target.result, name: file.name)
+        
+        if previewCount < (files.length - 1)
+          previewImage files[++previewCount]
+          
+      reader.readAsDataURL file
+
+    previewImage(files[previewCount])
+    
+    uploadImage = (file)->
+      $thumb = $images.find("li:eq(#{startingCount + uploadCount})")
+        
+      progressHandler = (e)->
+        percent = Math.round((e.loaded/e.total) * 100)
+        console.log e, percent
+      
+        $thumb.find('div.progress div.bar').attr('width', "#{percent}%")
+      
+      uploadSetup = ->
+        myXhr = $.ajaxSettings.xhr()
+        if myXhr.upload
+          myXhr.upload.addEventListener 'progress', progressHandler, false
+      
+        myXhr
+    
+      data = new FormData()
+      data.append 'image[file]', file
+    
+      $.ajax
+        url: "/projects/#{$('#project').data('id')}/images.json"
+        type: 'POST'
+        xhr: uploadSetup
+        data: data
+        cache: false
+        contentType: false
+        processData: false
+        success: ->
+          $.pjax
+            url: "/projects/#{$('#project').data('id')}"
+            container: '#main'
+            
+          if uploadCount < (files.length - 1)
+            uploadImage files[++uploadCount]
+        
+      uploadImage(files[uploadCount])
+      uploadImage(files[++uploadCount])
+      
   
   $('ul.nav a').on 'click', (e)->
     e.preventDefault()
@@ -196,5 +215,16 @@ $(document).ready ->
     .on 'submit', '#new_image', (e)->
       e.preventDefault()
       $(this).closest('div.modal').modal 'hide'
-      fileSelect $(this).find('input:file')[0].files 
+      fileSelect $(this).find('input:file')[0].files
+    
+    .on 'submit', '#new_membership', (e)->
+      e.preventDefault()
+      $(this).closest('div.modal').modal 'hide'
+      $.pjax
+        url: "/projects/#{$('#members').data('project-id')}/members"
+        container: '#main'
+    
+    .on 'ajax:success', 'a.close', (e, data, status, xhr)->
+      $(this).closest('li').slideUp -> $(this).remove()
+      
       
